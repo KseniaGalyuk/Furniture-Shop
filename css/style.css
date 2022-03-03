@@ -2,7 +2,7 @@
 @font-face {
   font-family: "Gilroy";
   font-display: swap;
-  src: url("../fonts/Gilroy-Bold.woff2") format("woff2"), url("../fonts/Gilroy-Bold.woff") format("woff");
+  src: url("../fonts/Gilroy-Bold.woff2") format("woff2"), url("../fonts/Gilroy-Bold.woff") format("woff"), url("../fonts/Gilroy-Bold.ttf") format("ttf"), url("../fonts/Gilroy-Bold.eot") format("embedded-opentype");
   font-weight: 700;
   font-style: normal;
 }
@@ -10,7 +10,7 @@
 @font-face {
   font-family: "Gilroy";
   font-display: swap;
-  src: url("../fonts/Gilroy-Medium.woff2") format("woff2"), url("../fonts/Gilroy-Medium.woff") format("woff");
+  src: url("../fonts/Gilroy-Medium.woff2") format("woff2"), url("../fonts/Gilroy-Medium.woff") format("woff"), url("../fonts/Gilroy-Medium.ttf") format("ttf"), url("../fonts/Gilroy-Medium.eot") format("embedded-opentype");
   font-weight: 500;
   font-style: normal;
 }
@@ -18,7 +18,7 @@
 @font-face {
   font-family: "Gilroy";
   font-display: swap;
-  src: url("../fonts/Gilroy-SemiBold.woff2") format("woff2"), url("../fonts/Gilroy-SemiBold.woff") format("woff");
+  src: url("../fonts/Gilroy-SemiBold.woff2") format("woff2"), url("../fonts/Gilroy-SemiBold.woff") format("woff"), url("../fonts/Gilroy-SemiBold.ttf") format("ttf"), url("../fonts/Gilroy-SemiBold.eot") format("embedded-opentype");
   font-weight: 600;
   font-style: normal;
 }
@@ -26,15 +26,15 @@
 @font-face {
   font-family: "Gilroy";
   font-display: swap;
-  src: url("../fonts/Gilroy-Regular.woff2") format("woff2"), url("../fonts/Gilroy-Regular.woff") format("woff");
+  src: url("../fonts/Gilroy-Regular.woff2") format("woff2"), url("../fonts/Gilroy-Regular.woff") format("woff"), url("../fonts/Gilroy-Regular.ttf") format("ttf"), url("../fonts/Gilroy-Regular.eot") format("embedded-opentype");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: "icons";
-  font-display: swap;
-  src: url("../fonts/icons.svg") format("svg"), url("../fonts/icons.woff") format("woff");
+  font-display: block;
+  src: url("../fonts/icons.svg") format("svg"), url("../fonts/icons.woff") format("woff"), url("../fonts/icons.eot") format("embedded-opentype"), url("../fonts/icons.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }

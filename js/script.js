@@ -137,7 +137,7 @@ if (iconMenu != null) {
 				bodyUnLock();
 			}
 		}
-		if (!e.target.closest('.icon-menu') && !e.target.closest('._popup-link') && !e.target.closest('.popup__content')) {
+		if (!e.target.closest('.icon-menu') && !e.target.closest('._popup-link') && !e.target.closest('.popup__content') && !e.target.closest(".menu__arrow")) {
 			iconMenu.classList.remove('_active');
 			menuBody.classList.remove('_active');
 			bodyUnLock();
@@ -520,13 +520,7 @@ function _removeClasses(el, class_name) {
 		el[i].classList.remove(class_name);
 	}
 }
-// Убирает переданный класс у переданного элемента
-function _toggleClasses(el, class_name) {
-	for (var i = 0; i < el.length; i++) {
-		el[i].classList.toggle(class_name);
-	}
-}
-// Фкнкция возвращает устройство на котором открыт сайт   isMobile.any()    вернет true, если сайт открыт на устройстве с тачскрином
+// Функция возвращает устройство на котором открыт сайт   isMobile.any()    вернет true, если сайт открыт на устройстве с тачскрином
 var isMobile = { Android: function () { return navigator.userAgent.match(/Android/i); }, BlackBerry: function () { return navigator.userAgent.match(/BlackBerry/i); }, iOS: function () { return navigator.userAgent.match(/iPhone|iPad|iPod/i); }, Opera: function () { return navigator.userAgent.match(/Opera Mini/i); }, Windows: function () { return navigator.userAgent.match(/IEMobile/i); }, any: function () { return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows()); } };
 // Функции для перемещения лейблов у тегов форм 
 function addAnEvent(elem) {
