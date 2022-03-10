@@ -49,7 +49,7 @@ if (document.querySelector('.slider-main__body')) {
 		// Если слайдов меньше чем нужно, слайдер полностью перестанет работать, пока не будет нужного количества
 		watchOverflow: true,
 		// Отступ между слайдами
-		spaceBerween: 32,
+		spaceBetween: 32,
 		// Бесконечный слайдер
 		loop: true,
 
@@ -72,7 +72,6 @@ if (document.querySelector('.slider-main__body')) {
 	});
 }
 
-
 //перемещение лейбла у тегов форм
 const formText = document.querySelector('.form-contacts__text'); //Блок, внутри котрого инпут и лэйбл, надо прописать стил при получении класса _active (типо лейбл уменьшаеьтся и перемещается выше)
 if (formText != null) {
@@ -80,14 +79,14 @@ if (formText != null) {
 }
 
 //Медиа запросы в js
-const mediaQuery = window.matchMedia('(min-width: 768px)') //здесь пишем медиа запрос
+/*const mediaQuery = window.matchMedia('(min-width: 768px)') //здесь пишем медиа запрос
 function handleTabletChange(e) {
 	if (e.matches) {
 		console.log('Media Query Matched!')//здесь то, что должно выполниться при выполнении запроса
 	}
 }
 mediaQuery.addListener(handleTabletChange);
-handleTabletChange(mediaQuery);
+handleTabletChange(mediaQuery);*/
 
 //Меню бургер
 const iconMenu = document.querySelector('.icon-menu');
