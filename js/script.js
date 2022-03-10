@@ -71,23 +71,6 @@ if (document.querySelector('.slider-main__body')) {
 		parallax: true,
 	});
 }
-
-//перемещение лейбла у тегов форм
-const formText = document.querySelector('.form-contacts__text'); //Блок, внутри котрого инпут и лэйбл, надо прописать стил при получении класса _active (типо лейбл уменьшаеьтся и перемещается выше)
-if (formText != null) {
-	addAnEvent(formText);
-}
-
-//Медиа запросы в js
-/*const mediaQuery = window.matchMedia('(min-width: 768px)') //здесь пишем медиа запрос
-function handleTabletChange(e) {
-	if (e.matches) {
-		console.log('Media Query Matched!')//здесь то, что должно выполниться при выполнении запроса
-	}
-}
-mediaQuery.addListener(handleTabletChange);
-handleTabletChange(mediaQuery);*/
-
 //Меню бургер
 const iconMenu = document.querySelector('.icon-menu');
 const menuBody = document.querySelector('.menu__body');
@@ -109,59 +92,19 @@ if (iconMenu != null) {
 	});
 };
 
+// header при скролле
+const headerElement = document.querySelector(".header");
+const callback = function (entries, observer) {
+	if (entries[0].isIntersecting) {
+		headerElement.classList.remove("_scroll")
+	} else {
+		headerElement.classList.add("_scroll")
+	}
+}
+const headerObserver = new IntersectionObserver(callback);
+headerObserver.observe(headerElement);
+
 //спойлеры
-/*const iconQuestions = document.querySelectorAll('.question');
-//const iconsQuestions = document.querySelectorAll('.question__icon');
-if (iconQuestions.length > 0) {
-	spollers(iconQuestions);
-};
-function spollers(iconQuestions) {
-	iconQuestions.forEach(iconQuestion => {
-		iconQuestionBody(iconQuestion);
-		iconQuestion.addEventListener('click', setSpollersAction)
-	});
-}
-function iconQuestionBody(iconQuestion) {
-	if (!iconQuestion.classList.contains('_active')) {
-		iconQuestion.lastElementChild.hidden = true;
-	}
-}
-function setSpollersAction(e) {
-	const el = e.target;
-	const spollerBlock = el.closest('.question');
-	if (!spollerBlock.querySelectorAll('._slide').length) {
-		if (el.classList.contains('question__icon')) {
-			el.classList.toggle('_active');
-			el.parentNode.classList.toggle('_active');
-			spollerBlock.firstElementChild.classList.remove('_active');
-			_slideToggle(spollerBlock.lastElementChild, 500);
-		} if (el.classList.contains('question__title')) {
-			spollerBlock.firstElementChild.classList.toggle('_active');
-			el.parentNode.classList.toggle('_active');
-			_slideToggle(spollerBlock.lastElementChild, 500);
-		} if (el.classList.contains('question__text')) {
-			el.parentNode.classList.remove('_active');
-			el.previousElementSibling.classList.remove('_active');
-			spollerBlock.firstElementChild.classList.remove('_active');
-			_slideToggle(spollerBlock.lastElementChild, 500);
-		} else {
-			el.classList.toggle('_active');
-			spollerBlock.firstElementChild.nextElementSibling.classList.toggle('_active');
-			if (el.firstElementChild != null) {
-				el.firstElementChild.classList.toggle('_active');
-			}
-			_slideToggle(spollerBlock.lastElementChild, 500);
-		}
-	}
-	// e.preventDefault();
-}
-// function hideSpollerBody(spollerBlock) {
-// 	const spollerActiveTitle = spollerBlock.querySelector('.question__title._active');
-// 	if (spollerActiveTitle) {
-// 		spollerActiveTitle.classList.remove('_active');
-// 		_slideUp(spollerActiveTitle.nextElementSibling, 500);
-// 	}
-// }*/
 let _slideUp = (target, duration = 500) => {
 	if (!target.classList.contains('_slide')) {
 		target.classList.add('_slide');
@@ -349,41 +292,6 @@ if (spollersArray.length > 0) {
 		}
 	}
 }
-//рейтинг звезд (на 5 звезд), при нажатии добавляется класс и ко всем следующим(блок надо перевернуть флексом, чтобы добавлялось к "предыдущим"), при повторном наведении сбрасывается, при уходе возвращается к предыдущему выбору.Каждой звезде надо задать id в обычном порядке, в одном рейтинге id 1.1, 1.2, 1.3 и т.д, в другом с другой цифры начинается
-const stars = document.querySelectorAll('.star-rating');
-let starActiv = new Array(5); //В этой переменной кол-во рейтингов + 1 (starActiv[0]) и сколько звезд в каком рейтинге выбрано
-if (stars.length > 0) {
-	for (let i = 0; i < stars.length; i++) {
-		stars[i].addEventListener('click', function (e) {
-			stars[i].classList.add('_active');
-			let d = Number(e.target.id);
-			starActiv[Math.floor(d)] = Math.round((Number(`${Math.floor(d)}.5`) - d) * 10);
-			for (let j = 1; j <= 5; j++) {
-				let newD = d + Number(`0.${j}`);
-				if (newD == `${Math.floor(newD)}.6`) break;
-				let elem = document.getElementById(newD.toFixed(1));
-				if (elem != null) {
-					elem.classList.add('_active');
-				}
-			};
-		});
-		stars[i].addEventListener('mouseover', function (e) {
-			stars[i].classList.remove('_active');
-			let d = Number(e.target.id);
-			for (let j = 1; j <= 5; j++) {
-				let newD = Number(`${Math.floor(d)}.${j}`);
-				document.getElementById(newD.toFixed(1)).classList.remove('_active');
-			};
-		});
-		stars[i].addEventListener('mouseout', function (e) {
-			let d = Number(e.target.id);
-			for (let j = 0; j <= starActiv[Math.floor(d)]; j++) {
-				let newD = Number(`${Math.floor(d)}.5`) - Number(`0.${j}`);
-				document.getElementById(newD).classList.add('_active');
-			}
-		});
-	};
-};
 //Прокрутка к началу строници
 const scrollToTop = document.querySelectorAll('.scroll-to-top');
 if (scrollToTop.length > 0) {
