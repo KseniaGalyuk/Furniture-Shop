@@ -7,7 +7,6 @@ let unlock = true;
 // Функция срабатывает когда весь контент загрузится
 window.onload = function () {
 	document.addEventListener("click", documentActions);
-
 	// Actions (Делегирование события click)
 	function documentActions(e) {
 		const targetElement = e.target;
@@ -29,9 +28,36 @@ window.onload = function () {
 		} else if (!targetElement.closest('.search-form') && document.querySelectorAll(".search-form._active")) {
 			document.querySelector(".search-form").classList.remove("_active");
 		}
+		// Показ дополнительных блоков товаров
+		if (targetElement.classList.contains('products__more')) {
+			getProducts(targetElement);
+			e.preventDefault();
+		}
+		if (targetElement.classList.contains('actions-product__button')) {
+			// В эту переменную получается уникальный дата атрибут, указанный у родителя кнопки
+			const productId = targetElement.closest('.item-product').dataset.pid;
+			addToCart(targetElement, productId);
+			e.preventDefault();
+		}
+		// Открытие корзины по нажатию на нее
+		if (targetElement.classList.contains('cart-header__icon') || targetElement.closest('.cart-header__icon')) {
+			// если в корзине ничего нет, она не откроется
+			if (document.querySelector('.cart-list').children.length > 0) {
+				document.querySelector('.cart-header').classList.toggle("_active");
+			}
+			e.preventDefault();
+			// Закрываем при нажатии на любое другое место, кроме кнопки дбавления в корзину
+		} else if (!targetElement.closest('.cart-header') && !targetElement.classList.contains('actions-product__button')) {
+			document.querySelector('.cart-header').classList.remove("_active")
+		}
+		// Удаление товара из корзины
+		if (targetElement.classList.contains('cart-list__delete')) {
+			const productId = targetElement.closest('.cart-list__item').dataset.cartPid;
+			updateCart(targetElement, productId, false);
+			e.preventDefault();
+		}
 	}
 }
-
 // слайдер
 if (document.querySelector('.slider-main__body')) {
 	new Swiper('.slider-main__body', {
@@ -91,7 +117,6 @@ if (iconMenu != null) {
 		}
 	});
 };
-
 // header при скролле
 const headerElement = document.querySelector(".header");
 const callback = function (entries, observer) {
@@ -103,7 +128,6 @@ const callback = function (entries, observer) {
 }
 const headerObserver = new IntersectionObserver(callback);
 headerObserver.observe(headerElement);
-
 //спойлеры
 let _slideUp = (target, duration = 500) => {
 	if (!target.classList.contains('_slide')) {
@@ -285,28 +309,13 @@ if (spollersArray.length > 0) {
 		}
 	}
 	function hideSpollersBody(spollersBlock) {
-		const spollerActiveTitle = spollersBlock.querySelector('[data-spoller]._active');
-		if (spollerActiveTitle) {
-			spollerActiveTitle.classList.remove('_active');
-			_slideUp(spollerActiveTitle.nextElementSibling, 500);
+		const spoller_activeTitle = spollersBlock.querySelector('[data-spoller]._active');
+		if (spoller_activeTitle) {
+			spoller_activeTitle.classList.remove('_active');
+			_slideUp(spoller_activeTitle.nextElementSibling, 500);
 		}
 	}
 }
-//Прокрутка к началу строници
-const scrollToTop = document.querySelectorAll('.scroll-to-top');
-if (scrollToTop.length > 0) {
-	for (let index = 0; index < questionsX.length; index++) {
-		scrollToTop[index].addEventListener('click', scrollTop());
-	}
-}
-//прокрутка к блоку
-const questions = document.querySelector('.questions');
-const questionsX = document.querySelectorAll('.questions_scroll');
-if (questionsX.length > 0) {
-	for (let index = 0; index < questionsX.length; index++) {
-		questionsX[index].addEventListener('click', () => scrollToBlock(questions));
-	}
-};
 //анимация при скролле
 const animItems = document.querySelectorAll('._anim-items');//этот класс добавляется к анимируемым объектам
 if (animItems.length > 0) {
@@ -336,98 +345,231 @@ if (animItems.length > 0) {
 		animOnScroll();
 	}, 300);
 }
-//Popups
-//у попапа должен быть id с его названием, а у кнопки, по которой он открывается href='#{название поп-апа}'
-let popupLink = document.querySelectorAll('._popup-link'); //этот класс добавляется ко всем кнопкам, на которых открывается поп-ап
-const lockPadding = document.querySelectorAll('.lock-padding'); //Этот класс добавляется к фиксированным объектам, например к шапке
-if (popupLink.length > 0) {
-	for (let index = 0; index < popupLink.length; index++) {
-		const el = popupLink[index];
-		el.addEventListener('click', function (e) {
-			let popupName = el.getAttribute('href').replace('#', '');
-			let curentPopup = document.getElementById(popupName);
-			popupOpen(curentPopup);
-			e.preventDefault();
-		})
-	}
-}
-let popupCloseIcon = document.querySelectorAll('.popup__close');//этот класс добавляется для крестика, по которому поп-ап закрывается
-if (popupCloseIcon.length > 0) {
-	for (let index = 0; index < popupCloseIcon.length; index++) {
-		const el = popupCloseIcon[index];
-		el.addEventListener('click', function (e) {
-			e.stopPropagation();
-			if (menuBody.classList.contains('_active')) {
-				popupClose(el.closest('.popup'), false);
-			} else {
-				popupClose(el.closest('.popup'));
-			}
-			e.preventDefault();
-		})
-	}
-}
-document.addEventListener('keydown', function (e) {
-	if (e.code === 'Escape') {
-		const popupActive = document.querySelector('.popup._active');
-		if (menuBody.classList.contains('_active')) {
-			popupClose(popupActive, false);
-		} else {
-			popupClose(popupActive);
-		}
-	}
-});
 
 //*< Функции>==========================================================================================
-//Закрывает меню бургер
-function menu_close() {
-	iconMenu.classList.remove("_active");
-	menuBody.classList.remove("_active");
-	bodyUnLock();
-}
 // Убирает переданный класс у переданного элемента
 function _removeClasses(el, class_name) {
 	for (var i = 0; i < el.length; i++) {
 		el[i].classList.remove(class_name);
 	}
 }
-// Функция возвращает устройство на котором открыт сайт   isMobile.any()    вернет true, если сайт открыт на устройстве с тачскрином
-var isMobile = { Android: function () { return navigator.userAgent.match(/Android/i); }, BlackBerry: function () { return navigator.userAgent.match(/BlackBerry/i); }, iOS: function () { return navigator.userAgent.match(/iPhone|iPad|iPod/i); }, Opera: function () { return navigator.userAgent.match(/Opera Mini/i); }, Windows: function () { return navigator.userAgent.match(/IEMobile/i); }, any: function () { return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows()); } };
-// Функции для перемещения лейблов у тегов форм 
-function addAnEvent(elem) {
-	elem.firstElementChild.addEventListener('focus', function () {
-		formAddClass(elem)
-	});
-	elem.firstElementChild.addEventListener('blur', function () {
-		formRemoveClass(elem)
-	});
-}
-function formAddClass(elem) {
-	elem.classList.add('_active');
-}
-function formRemoveClass(elem) {
-	const elemChildValue = elem.firstElementChild.value;
-	if (elemChildValue == '') {
-		elem.classList.remove('_active');
+// Показ дополнительных блоков товаров
+// Асинхронная функция (async), потому что будем использовать технологию айджекс с помощью fetch
+async function getProducts(button) {
+	if (!button.classList.contains("_hold")) {
+		// Этот класс нужен,чтобы избежать повторных нажатий, если бы запрос шол на бэкэнд и занимал бы время
+		button.classList.add("_hold");
+		// прописываем путь к файлу json
+		const file = "json/products.json";
+		// GET запрос этого к этому пути
+		let response = await fetch(file, {
+			method: "GET"
+		});
+		// Если файл найден и все ок, идем дальше
+		if (response.ok) {
+			// Подгружаем в переменную содержание указанного выше файла в формате json
+			let result = await response.json();
+			loadProducts(result);
+			button.classList.remove("_hold");
+			// Удаляем саму кнопку, чтобы не нажать на нее повторно (Если бы это был реальный проект, то все подружалось бы с бекэнда и кнопку удалять не пришлось бы)
+			button.remove();
+		} else {//Если с файлом какие-то проблемы, просто выводим сообщение
+			alert("Ошибка");
+		}
 	}
 }
-//Прокрутка к началу строници
-function scrollTop(e) {
-	e.preventDefault();
-	window.scrollTo({
-		top: 0,
-		left: 0,
-		behavior: "smooth",
-	});
-};
-function scrollToBlock(block) { //в скобки передаем блок, до которого надо докрутить
-	let getTop = block.getBoundingClientRect().top;
-	let getTopDocument = getTop + window.scrollY;
-	window.scrollTo({
-		top: getTopDocument,
-		left: 0,
-		behavior: "smooth",
-	});
-};
+function loadProducts(data) {
+	const productsItems = document.querySelector(".products__items");
+	data.products.forEach(item => {
+		const productId = item.id;
+		const productUrl = item.url;
+		const productTitle = item.title;
+		const productText = item.text;
+		const productLabels = item.labels;
+		const productImage = item.image;
+		const productPrice = item.price;
+		const productPriceOld = item.priceOld;
+		const productShareUrl = item.shareUrl;
+		const productLikeUrl = item.likeUrl;
+
+		let productTemplateStart = `<article data-pid="${productId}" class="products__item item-product">`;
+		let productTemplateEnd = `</article>`;
+
+		let productTemplateLabels = '';
+		if (productLabels) {
+			let productTemplateLabelsStart = `<div class="item-product__labels">`;
+			let productTemplateLabelsEnd = `</div>`;
+			let productTemplateLabelsContent = '';
+
+			productLabels.forEach(labelItem => {
+				productTemplateLabelsContent += `<div class="item-product__label item-product__label_${labelItem.type}">${labelItem.value}</div>`;
+			});
+			productTemplateLabels += productTemplateLabelsStart;
+			productTemplateLabels += productTemplateLabelsContent;
+			productTemplateLabels += productTemplateLabelsEnd;
+
+		}
+
+		let productTemplateImage = `
+	<a href="${productUrl}" class="item-product__image _ibg">
+		<img src="img/products/${productImage}" alt="${productTitle}">
+	</a>
+		`;
+
+		let productTemplateBodyStart = `<div class="item-product__body">`;
+		let productTemplateBodyEnd = `</div>`;
+		let productTemplateBodyContent = `
+	<div class="item-product__content">
+		<h5 class="item-product__title">${productTitle}</h5>
+		<div class="item-product__text">${productText}</div>
+	</div>
+		`;
+
+		let productTemplatePrices = '';
+		let productTemplatePricesStart = `<div class="item-product__prices">`;
+		let productTemplatePricesCurrent = `<div class="item-product__price">Rp ${productPrice}</div>`;
+		let productTemplatePricesOld = `<div class="item-product__price item-product__price_old">Rp ${productPriceOld}</div>`;
+		let productTemplatePricesEnd = `</div>`;
+
+		productTemplatePrices = productTemplatePricesStart;
+		productTemplatePrices += productTemplatePricesCurrent;
+		if (productPriceOld) {
+			productTemplatePrices += productTemplatePricesOld;
+		}
+		productTemplatePrices += productTemplatePricesEnd;
+
+		let productTemplateActions = `
+	<div class="item-product__actions actions-product">
+		<div class="actions-product__body">
+			<a href="" class="actions-product__button btn btn_white">Add to cart</a>
+			<a href="${productShareUrl}" class="actions-product__link _icon-share">Share</a>
+			<a href="${productLikeUrl}" class="actions-product__link _icon-favorite">Like</a>
+		</div>
+	</div>
+		`;
+
+		let productTemplateBody = "";
+		productTemplateBody += productTemplateBodyStart;
+		productTemplateBody += productTemplateBodyContent;
+		productTemplateBody += productTemplatePrices;
+		productTemplateBody += productTemplateActions;
+		productTemplateBody += productTemplateBodyEnd;
+
+		let productTemplate = '';
+		productTemplate = productTemplateStart;
+		productTemplate += productTemplateLabels;
+		productTemplate += productTemplateImage;
+		productTemplate += productTemplateBody;
+		productTemplate += productTemplateEnd;
+
+		productsItems.insertAdjacentHTML('beforeend', productTemplate);
+		_ibg();
+	})
+}
+// Функция анимации добавления товара к корзину
+function addToCart(productButton, productId) {
+	// Проверка на наличие класса холд, чтобы избежать кучи нажатий
+	if (!productButton.classList.contains('_hold')) {
+		productButton.classList.add('_hold');
+		productButton.classList.add('_fly');
+
+		// Получаем иконку корзины, айди товара, на который нажали и картинку этого товара
+		const cart = document.querySelector('.cart-header__icon');
+		const product = document.querySelector(`[data-pid="${productId}"]`);
+		const productImage = product.querySelector('.item-product__image');
+		// Клонируем картинку товара, чтобы клон "улетел"
+		const productImageFly = productImage.cloneNode(true);
+		// Получаем размеры и положение оригинальной картинки
+		const productImageFlyWidth = productImage.offsetWidth;
+		const productImageFlyHeight = productImage.offsetHeight;
+		const productImageFlyTop = productImage.getBoundingClientRect().top;
+		const productImageFlyLeft = productImage.getBoundingClientRect().left;
+		// Меняем класс у клона 
+		productImageFly.setAttribute('class', '_flyImage _ibg');
+		// Добавляем эти размеры и положение к клону
+		productImageFly.style.cssText = `
+			left:${productImageFlyLeft}px;
+			top:${productImageFlyTop}px;
+			width:${productImageFlyWidth}px;
+			height:${productImageFlyHeight}px;`;
+		// Добавляем клон в самый конец тега боди
+		document.body.append(productImageFly);
+		// отправляем клон в корзину, получая перед этим ее позицию
+		const cartFlyLeft = cart.getBoundingClientRect().left;
+		const cartFlyTop = cart.getBoundingClientRect().top;
+		productImageFly.style.cssText = `
+			left:${cartFlyLeft}px;
+			top:${cartFlyTop}px;
+			width:0px;
+			height:0px;
+			opacity: 0;`;
+		_ibg();
+		productImageFly.addEventListener('transitionend', function () {
+			if (productButton.classList.contains('_fly')) {
+				productImageFly.remove();
+				updateCart(productButton, productId)
+				productButton.classList.remove('_fly');
+			}
+		})
+	}
+}
+// Добавляет/удаляет товары в корзину
+// При удалении в выхове функции надо 3 параметром указать false
+function updateCart(productButton, productId, productAdd = true) {
+	const cart = document.querySelector('.cart-header');
+	const cartIcon = cart.querySelector('.cart-header__icon');
+	const cartQuantity = cartIcon.querySelector('span');
+	const cartProduct = document.querySelector(`[data-cart-pid='${productId}']`);
+	const cartList = document.querySelector('.cart-list');
+	// Добавление товара
+	if (productAdd) {
+		// Если спан существует, мы увеличиваем его значение на единицу
+		if (cartQuantity) {
+			cartQuantity.innerHTML = ++cartQuantity.innerHTML;
+		} else { //Если спана нет, добавляем его со значением 1
+			cartIcon.insertAdjacentHTML('beforeend', `<span>1</span>`)
+		}
+		// Если в карзине нет товара, на котрый мы нажимаем товара, мы добавляем его, используя контент оригинального товара
+		if (!cartProduct) {
+			const product = document.querySelector(`[data-pid='${productId}']`);
+			const cartProductImage = product.querySelector('.item-product__image').innerHTML;
+			const cartProductTitle = product.querySelector('.item-product__title').innerHTML;
+			// Пишем HTML код внутренностей карточки товара
+			const cartProductContent = `
+		<a href="" class="cart-list__image _ibg">${cartProductImage}</a>
+		<div class="cart-list__body">
+			<a href="" class="cart-list__title">${cartProductTitle}</a>
+			<div class="cart-list__quantity">Quantity: <span>1</span></div>
+			<a href="" class="cart-list__delete">Delete</a>
+		</div>`;
+			// Добавляем в конец списка пункт, внутри которого предыдущий HTML код
+			cartList.insertAdjacentHTML('beforeend', `<li data-cart-pid='${productId}' class='cart-list__item'>${cartProductContent}</li>`);
+			_ibg();
+		} else {
+			// Если в корзине уже есть добавляемый товар, тогда увеличиваем значение в спане
+			const cartProductQuantity = cartProduct.querySelector('.cart-list__quantity span')
+			cartProductQuantity.innerHTML = ++cartProductQuantity.innerHTML;
+		}
+		// После всех действий отбираем класс холд у кнопки добавления в корзину, чтобы можно было еще добавить этот в корзину
+		productButton.classList.remove('_hold');
+	} else {
+		const cartProductQuantity = cartProduct.querySelector('.cart-list__quantity span');
+		cartProductQuantity.innerHTML = --cartProductQuantity.innerHTML;
+		if (!parseInt(cartProductQuantity.innerHTML)) {
+			cartProduct.remove();
+		}
+		const cartQuantityValue = --cartQuantity.innerHTML;
+
+		if (cartQuantityValue) {
+			cartQuantity.innerHTML = cartQuantityValue;
+		} else {
+			cartQuantity.remove();
+			cart.classList.remove('_active');
+		}
+	}
+}
+// Функция возвращает устройство на котором открыт сайт   isMobile.any()    вернет true, если сайт открыт на устройстве с тачскрином
+var isMobile = { Android: function () { return navigator.userAgent.match(/Android/i); }, BlackBerry: function () { return navigator.userAgent.match(/BlackBerry/i); }, iOS: function () { return navigator.userAgent.match(/iPhone|iPad|iPod/i); }, Opera: function () { return navigator.userAgent.match(/Opera Mini/i); }, Windows: function () { return navigator.userAgent.match(/IEMobile/i); }, any: function () { return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows()); } };
 //эта функция точно узнает местоположение объекта.Можно получить значение сверху и слева
 function offset(el) { //в скобках объект, чье местоположение нужно
 	const rect = el.getBoundingClientRect(),
@@ -435,38 +577,8 @@ function offset(el) { //в скобках объект, чье местопол�
 		scrollTop = window.scrollY || document.documentElement.scrollTop;
 	return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
 }
-//Открывает поп-ап
-function popupOpen(curentPopup) { //В скобках попап, который надо открыть (найти его можно по айди)
-	if (curentPopup && unlock) {
-		let activePopup = document.querySelector('.popup._active');
-		if (activePopup) {
-			popupClose(activePopup, false);
-		} else {
-			bodyLock();
-		}
-		curentPopup.classList.add('_active');
-		curentPopup.addEventListener("click", function (e) {
-			if (!e.target.closest('.popup__content')) {
-				e.stopPropagation();
-				if (menuBody.classList.contains('_active')) {
-					popupClose(e.target.closest('.popup'), false);
-				} else {
-					popupClose(e.target.closest('.popup'));
-				}
-			}
-		});
-	}
-}
-//Закрывает поп-ап
-function popupClose(item, doUnlock = true) { //в скобках поп-ап, который надо закрыть и надо ли разблокировать прокрутку
-	if (unlock) {
-		item.classList.remove('_active');
-		if (doUnlock) {
-			bodyUnLock();
-		}
-	}
-}
 //Блокирует прокрутку
+var lockPadding = document.querySelectorAll('.lock-padding');
 function bodyLock() {
 	const lockPaddingValue = window.innerWidth - document.querySelector('.wrapper').offsetWidth + 'px';
 	if (lockPadding.length > 0) {
@@ -502,15 +614,15 @@ function bodyUnLock() {
 	}, 500); //Время, в течении которого нельзя повторно открыть поп-ап, обычно равен времени анимации
 }
 //Ставит картинку как фон
-function ibg() {
-	let ibg = document.querySelectorAll(".ibg");
-	for (var i = 0; i < ibg.length; i++) {
-		if (ibg[i].querySelector('img')) {
-			ibg[i].style.backgroundImage = 'url(' + ibg[i].querySelector('img').getAttribute('src') + ')';
+function _ibg() {
+	let _ibg = document.querySelectorAll("._ibg");
+	for (var i = 0; i < _ibg.length; i++) {
+		if (_ibg[i].querySelector('img')) {
+			_ibg[i].style.backgroundImage = 'url(' + _ibg[i].querySelector('img').getAttribute('src') + ')';
 		}
 	}
 }
-ibg();
+_ibg();
 //*</ Функции>==========================================================================================
 
 // Скрипты для форм
