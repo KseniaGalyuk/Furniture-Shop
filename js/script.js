@@ -134,6 +134,57 @@ if (document.querySelector('.slider-rooms__body')) {
 		parallax: true,
 	});
 }
+if (document.querySelector('.slider-tips__body')) {
+	new Swiper('.slider-tips__body', {
+		//Навигация
+		pagination: {
+			el: '.slider-tips__dotts',
+			// Буллеты
+			//тип по умолчанию
+			type: 'bullets',
+			//можно ли на него нажимать
+			clickable: true,
+		},
+		// Количество слайдов для показа, можно указывать не целые числа, можно 'auto'-колво слайдеров выводится автоматически, в зависимости от контента или заданной ширины
+		//slidesPerView: 3,
+		// Если слайдов меньше чем нужно, слайдер полностью перестанет работать, пока не будет нужного количества
+		watchOverflow: true,
+		// Отступ между слайдами
+		// spaceBetween: 32,
+		// Бесконечный слайдер
+		loop: true,
+
+		loopAdditionalSlides: 5,
+
+
+		// Arrows
+		navigation: {
+			nextEl: ".slider-tips .slider-arrow_next",
+			prevEl: ".slider-tips .slider-arrow_prev",
+		},
+		observer: true,
+		observeParents: true,
+		// Скорость
+		speed: 800,
+		preloadImages: false,
+		// Парралакс эффект
+		parallax: true,
+		breakpoints: {
+			320: {
+				slidesPerView: 1.1,
+				spaceBetween: 15
+			},
+			600: {
+				slidesPerView: 2,
+				spaceBetween: 20
+			},
+			992: {
+				slidesPerView: 3,
+				spaceBetween: 32
+			}
+		},
+	});
+}
 //Меню бургер
 const iconMenu = document.querySelector('.icon-menu');
 const menuBody = document.querySelector('.menu__body');
