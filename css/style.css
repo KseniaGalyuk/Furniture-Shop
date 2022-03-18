@@ -2194,9 +2194,6 @@ body._lock {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-column-gap: 24px;
-     -moz-column-gap: 24px;
-          column-gap: 24px;
   -webkit-box-align: center;
   -webkit-align-items: center;
       -ms-flex-align: center;
@@ -2246,6 +2243,10 @@ body._lock {
       -ms-flex-align: center;
           align-items: center;
   overflow: hidden;
+}
+
+.item-advantagas__icon:not(:last-child) {
+  margin-right: 24px;
 }
 
 .item-advantagas__body > :last-child {
@@ -2480,9 +2481,6 @@ body._lock {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-column-gap: 16px;
-     -moz-column-gap: 16px;
-          column-gap: 16px;
   -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
           flex-wrap: wrap;
@@ -2495,6 +2493,7 @@ body._lock {
 }
 
 .item-product__price_old {
+  margin-left: 16px;
   font-weight: 400;
   font-size: 1rem;
   line-height: 150%;
@@ -2561,7 +2560,6 @@ body._lock {
   -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  row-gap: 24px;
 }
 
 @media (any-hover: hover) {
@@ -2575,6 +2573,10 @@ body._lock {
   -webkit-flex: 1 1 100%;
       -ms-flex: 1 1 100%;
           flex: 1 1 100%;
+}
+
+.actions-product__button:not(:last-child) {
+  margin-bottom: 24px;
 }
 
 .actions-product__button._hold {
@@ -2591,9 +2593,6 @@ body._lock {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-column-gap: 8px;
-     -moz-column-gap: 8px;
-          column-gap: 8px;
   font-weight: 600;
   line-height: 150%;
   font-size: 1rem;
@@ -2605,6 +2604,7 @@ body._lock {
 
 .actions-product__link::before {
   font-size: 1.375rem;
+  margin-right: 8px;
 }
 
 @media (any-hover: hover) {
@@ -2974,9 +2974,6 @@ body._lock {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-column-gap: 8px;
-     -moz-column-gap: 8px;
-          column-gap: 8px;
   font-weight: 500;
   font-size: 1rem;
   line-height: 150%;
@@ -2987,6 +2984,7 @@ body._lock {
   width: 27px;
   height: 1px;
   background-color: #616161;
+  margin: 0 8px;
 }
 
 .tips {
@@ -3234,7 +3232,6 @@ body._lock {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  gap: 16px;
 }
 
 .furniture__column:first-child {
@@ -3248,6 +3245,8 @@ body._lock {
   display: -ms-inline-grid;
   display: inline-grid;
   gap: 16px;
+  margin: -8px 0;
+  padding: 16px 0;
   -ms-grid-columns: auto;
       grid-template-columns: auto;
   grid-auto-flow: column;
