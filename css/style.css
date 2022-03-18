@@ -233,6 +233,7 @@ body._lock {
 }
 
 .slider-arrow {
+  pointer-events: auto;
   -webkit-border-radius: 50%;
           border-radius: 50%;
   height: 48px;
@@ -2613,6 +2614,379 @@ body._lock {
   .actions-product__link:hover {
     color: #e89f71;
   }
+}
+
+.rooms {
+  background: #fcf8f3;
+  padding-top: 44px;
+  padding-bottom: 44px;
+}
+
+@media (max-width: 1270px) {
+  .rooms {
+    padding-top: -webkit-calc(30px + 14 * ((100vw - 320px) / 950));
+    padding-top: calc(30px + 14 * ((100vw - 320px) / 950));
+  }
+}
+
+@media (max-width: 1270px) {
+  .rooms {
+    padding-bottom: -webkit-calc(30px + 14 * ((100vw - 320px) / 950));
+    padding-bottom: calc(30px + 14 * ((100vw - 320px) / 950));
+  }
+}
+
+@media (min-width: 61.99875em) {
+  .rooms__container {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
+.rooms__body {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 37.5%;
+      -ms-flex: 0 0 37.5%;
+          flex: 0 0 37.5%;
+  position: relative;
+  z-index: 5;
+  -webkit-align-self: center;
+      -ms-flex-item-align: center;
+              -ms-grid-row-align: center;
+          align-self: center;
+}
+
+@media (min-width: 61.99875em) {
+  .rooms__body {
+    padding-right: 80px;
+  }
+}
+
+@media (min-width: 61.99875em) and (max-width: 1270px) {
+  .rooms__body {
+    padding-right: -webkit-calc(30px + 50 * ((100vw - 320px) / 950));
+    padding-right: calc(30px + 50 * ((100vw - 320px) / 950));
+  }
+}
+
+@media (max-width: 61.99875em) {
+  .rooms__body {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    margin-bottom: 44px;
+  }
+}
+
+@media (max-width: 61.99875em) and (max-width: 1270px) {
+  .rooms__body {
+    margin-bottom: -webkit-calc(30px + 14 * ((100vw - 320px) / 950));
+    margin-bottom: calc(30px + 14 * ((100vw - 320px) / 950));
+  }
+}
+
+.rooms__title {
+  text-align: left;
+}
+
+.rooms__title:not(:last-child) {
+  margin-bottom: 6px;
+}
+
+@media (max-width: 61.99875em) {
+  .rooms__title {
+    text-align: center;
+  }
+}
+
+.rooms__text {
+  font-weight: 500;
+  line-height: 150%;
+  font-size: 1rem;
+  color: #616161;
+}
+
+.rooms__text:not(:last-child) {
+  margin-bottom: 24px;
+}
+
+@media (max-width: 61.99875em) {
+  .rooms__text {
+    text-align: center;
+  }
+}
+
+.rooms__button {
+  min-width: 176px;
+  background: #e89f71;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 150%;
+}
+
+@media (any-hover: hover) {
+  .rooms__button:hover {
+    background: #be825c;
+  }
+}
+
+.rooms__slider {
+  min-width: 0;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  -webkit-align-self: flex-start;
+      -ms-flex-item-align: start;
+          align-self: flex-start;
+}
+
+@media (max-width: 29.99875em) {
+  .rooms__slider {
+    margin: 0 -15px;
+  }
+}
+
+.slider-rooms {
+  position: relative;
+}
+
+.slider-rooms__body {
+  overflow: visible;
+  margin-left: 0;
+  margin-right: 0;
+  position: relative;
+}
+
+.slider-rooms__body::before {
+  content: "";
+  position: absolute;
+  top: -1%;
+  height: 102%;
+  width: 100vw;
+  left: 0;
+  background: #fcf8f3;
+  z-index: 2;
+  -webkit-transform: translateX(-100%);
+      -ms-transform: translateX(-100%);
+          transform: translateX(-100%);
+}
+
+.slider-rooms__slide {
+  width: 375px;
+  position: relative;
+  overflow: hidden;
+  min-height: 582px;
+}
+
+@media (max-width: 1270px) {
+  .slider-rooms__slide {
+    min-height: -webkit-calc(400px + 182 * ((100vw - 320px) / 950));
+    min-height: calc(400px + 182 * ((100vw - 320px) / 950));
+  }
+}
+
+.slider-rooms__slide.swiper-slide-active .slider-rooms__image {
+  height: 100%;
+}
+
+@media (max-width: 29.99875em) {
+  .slider-rooms__slide {
+    width: 100%;
+  }
+}
+
+.slider-rooms__image {
+  -webkit-transition: height 0.8s ease 0s;
+  -o-transition: height 0.8s ease 0s;
+  transition: height 0.8s ease 0s;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+@media (min-width: 47.99875em) {
+  .slider-rooms__image {
+    height: 83%;
+  }
+}
+
+.slider-rooms__content {
+  position: absolute;
+  z-index: 2;
+  bottom: 24px;
+  left: 24px;
+  display: inline-block;
+  color: inherit;
+  padding: 32px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 1270px) {
+  .slider-rooms__content {
+    bottom: -webkit-calc(15px + 9 * ((100vw - 320px) / 950));
+    bottom: calc(15px + 9 * ((100vw - 320px) / 950));
+  }
+}
+
+@media (max-width: 1270px) {
+  .slider-rooms__content {
+    left: -webkit-calc(15px + 9 * ((100vw - 320px) / 950));
+    left: calc(15px + 9 * ((100vw - 320px) / 950));
+  }
+}
+
+@media (max-width: 1270px) {
+  .slider-rooms__content {
+    padding: -webkit-calc(15px + 17 * ((100vw - 320px) / 950));
+    padding: calc(15px + 17 * ((100vw - 320px) / 950));
+  }
+}
+
+@supports ((-webkit-backdrop-filter: blur(31px)) or (backdrop-filter: blur(31px))) {
+  .slider-rooms__content {
+    background: rgba(255, 255, 255, 0.72);
+    -webkit-backdrop-filter: blur(31px);
+            backdrop-filter: blur(31px);
+  }
+}
+
+@media (any-hover: hover) {
+  .slider-rooms__content:hover::before {
+    background: #be825c;
+  }
+}
+
+.slider-rooms__content::before {
+  position: absolute;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  bottom: 0;
+  right: 0;
+  -webkit-transform: translateX(100%);
+      -ms-transform: translateX(100%);
+          transform: translateX(100%);
+  color: #ffffff;
+  width: 48px;
+  height: 48px;
+  background: #e89f71;
+  -webkit-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  font-size: 1rem;
+}
+
+.slider-rooms__label:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.slider-rooms__title {
+  font-weight: 600;
+  line-height: 120%;
+  font-size: 1.75rem;
+}
+
+@media (max-width: 47.99875em) {
+  .slider-rooms__title {
+    font-size: 1.5rem;
+  }
+}
+
+.slider-rooms__title:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.slider-rooms__arrows {
+  pointer-events: none;
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  right: 5px;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  width: -webkit-calc(100% - 10px);
+  width: calc(100% - 10px);
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+@media (min-width: 1282px) {
+  .slider-rooms__arrows {
+    width: -webkit-calc(100% + 48px);
+    width: calc(100% + 48px);
+    right: -24px;
+  }
+}
+
+@media (min-width: 47.99875em) {
+  .slider-rooms__dotts.swiper-pagination-bullets.swiper-pagination-horizontal {
+    position: absolute;
+    bottom: 0;
+    left: 375px;
+    padding: 29px 24px;
+  }
+}
+
+@media (max-width: 47.99875em) {
+  .slider-rooms__dotts {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    padding-top: 20px;
+  }
+}
+
+.label-slider {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-column-gap: 8px;
+     -moz-column-gap: 8px;
+          column-gap: 8px;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 150%;
+  color: #616161;
+}
+
+.label-slider__line {
+  width: 27px;
+  height: 1px;
+  background-color: #616161;
 }
 
 .page {

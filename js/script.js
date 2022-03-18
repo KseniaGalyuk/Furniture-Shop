@@ -97,6 +97,43 @@ if (document.querySelector('.slider-main__body')) {
 		parallax: true,
 	});
 }
+if (document.querySelector('.slider-rooms__body')) {
+	new Swiper('.slider-rooms__body', {
+		//Навигация
+		pagination: {
+			el: '.slider-rooms__dotts',
+			// Буллеты
+			//тип по умолчанию
+			type: 'bullets',
+			//можно ли на него нажимать
+			clickable: true,
+		},
+		// Количество слайдов для показа, можно указывать не целые числа, можно 'auto'-колво слайдеров выводится автоматически, в зависимости от контента или заданной ширины
+		slidesPerView: 'auto',
+		// Если слайдов меньше чем нужно, слайдер полностью перестанет работать, пока не будет нужного количества
+		watchOverflow: true,
+		// Отступ между слайдами
+		spaceBetween: 24,
+		// Бесконечный слайдер
+		loop: true,
+
+		loopAdditionalSlides: 5,
+
+
+		// Arrows
+		navigation: {
+			nextEl: ".slider-rooms .slider-arrow_next",
+			prevEl: ".slider-rooms .slider-arrow_prev",
+		},
+		observer: true,
+		observeParents: true,
+		// Скорость
+		speed: 800,
+		preloadImages: false,
+		// Парралакс эффект
+		parallax: true,
+	});
+}
 //Меню бургер
 const iconMenu = document.querySelector('.icon-menu');
 const menuBody = document.querySelector('.menu__body');
